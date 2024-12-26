@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Destination System</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Travel Destination System</h1>
+        <form action="/" method="POST">
+            <label for="place">Enter a place you're visiting:</label>
+            <input type="text" id="place" name="place" required>
+            
+            <label for="trip-type">Solo or Family trip?</label>
+            <select id="trip-type" name="trip-type">
+                <option value="solo">Solo</option>
+                <option value="family">Family</option>
+            </select>
+
+            <label for="days">How many days do you want to travel?</label>
+            <input type="number" id="days" name="days" required>
+            
+            <label for="budget">What's your budget in INR?</label>
+            <input type="number" id="budget" name="budget" required>
+
+            <button type="submit">Get Suggestions</button>
+        </form>
+
+        {% if user_place %}
+        <div class="results">
+            <h2>Your Travel Plan</h2>
+            <p><strong>Destination:</strong> {{ user_place }}</p>
+            <p><strong>Trip Type:</strong> {{ trip_type }}</p>
+            <p><strong>Number of Days:</strong> {{ days }}</p>
+            <p><strong>Budget:</strong> ₹{{ budget }}</p>
+
+            <h3>Nearest Attractions:</h3>
+            <ul>
+                {% for attraction in nearest_attractions %}
+                <li>{{ attraction['attraction'] }} (Distance: {{ attraction['distance'] }} | Cost: ₹{{ attraction['cost'] }})</li>
+                {% endfor %}
+            </ul>
+
+            <h3>Suggested Activities for a {{ trip_type }} Trip:</h3>
+            <p>{{ trip_suggestion }}</p>
+
+            <h3>Budget-Friendly Attractions:</h3>
+            <ul>
+                {% for attraction in budget_friendly_attractions %}
+                <li>{{ attraction['attraction'] }} (Cost: ₹{{ attraction['cost'] }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
